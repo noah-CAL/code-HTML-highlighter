@@ -24,7 +24,7 @@ def copy_paste(code='', language=DEFAULT_LANG, output=False, clipboard=False) ->
         print('Copied to clipboard!')
     return formatted_code
 
-if __name__ == '__main__':
+def main():
     """
     CLI arguments may include a valid language name (otherwise defaults to Java). 
     Add -o flag to write formatted code to output.txt in current directory
@@ -39,3 +39,6 @@ if __name__ == '__main__':
             language = arg
     code = pyperclip.paste()
     copy_paste(code, language, output, True)
+
+if __name__ == '__main__':
+    main()
