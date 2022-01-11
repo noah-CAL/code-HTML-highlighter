@@ -26,8 +26,8 @@ def copy_paste(code='', language=DEFAULT_LANG, output=False, clipboard=False) ->
 
 if __name__ == '__main__':
     """
-    The first argument of the CLI arguments must be the language (default is Java). 
-    Add -o after the language to output to output.txt in current directory
+    CLI arguments may include a valid language name (otherwise defaults to Java). 
+    Add -o flag to write formatted code to output.txt in current directory
     """
     language = DEFAULT_LANG
     output = False
