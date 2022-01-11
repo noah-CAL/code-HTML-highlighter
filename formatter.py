@@ -12,6 +12,23 @@ from pygments.lexers.jvm import JavaLexer
 
 import re
 
+def remove_cloze(string) -> str:
+    """Remove Anki-style cloze tags from HTML strings"""
+    pattern = (r'<span class="p">{{</span><span class="n">c(\d+)</span><span class="p">::</span>' # matches '{{c1::' and records number in match_group 1
+            + r'([\S\s]*?)'                             # capture group inside cloze -- matches any character incl. newline in match_group 2
+            + r'<span class="p">::</span>([\S\s]*?)'    # optional cloze hints -- matches hint in match_group 3
+            + r'<span class="p">}}</span>')             # matches closing brackets '}}'
+
+    def repl(matchobj):
+        cloze_number = matchobj.group(1)
+        cloze_text = matchobj.group(2)
+        optional_hint = matchobj.group(3)
+        hint = '::' + optional_hint if optional_hint else ''
+
+        return '{{c' + cloze_number + '::' + cloze_text + hint + '}}'
+
+    return re.sub(pattern, repl, string)
+
 def format(code: str, lang: str ) -> str: 
     """
     Takes input code and returns a string of HTML with approriate <div> / <span> classes
@@ -32,31 +49,8 @@ def format(code: str, lang: str ) -> str:
     lexer = lexers[lang]
     formatted = highlight(code, lexer(), HtmlFormatter())
 
-    # replace clozes in match for anki formatting
-    pattern = (r'<span class="p">{{</span><span class="n">c\d</span><span class="p">::</span>' # matches '{{c1::'
-            + r'([\S\s]*?)' # capture group inside cloze -- text should be preserved in substitution -- matches any character incl. newline
-            + r''           # TODO include support for optional cloze hints
-            + r'<span class="p">}}</span>') # matches closing brackets '}}'
-    formatted = re.sub(pattern, replace_cloze, formatted)
-
     # add language class to container div
     div = f'<div class="highlight {lang}">'
     formatted = formatted.replace('<div class="highlight">', div)
+
     return remove_cloze(formatted)
-
-def remove_cloze(string) -> str:
-    """Remove Anki-style cloze tags from HTML strings"""
-    pattern = (r'<span class="p">{{</span><span class="n">c(\d+)</span><span class="p">::</span>' # matches '{{c1::' and records number in match_group 1
-            + r'([\S\s]*?)'                             # capture group inside cloze -- matches any character incl. newline in match_group 2
-            + r'<span class="p">::</span>([\S\s]*?)'    # optional cloze hints -- matches hint in match_group 3
-            + r'<span class="p">}}</span>')             # matches closing brackets '}}'
-
-    def repl(matchobj):
-        cloze_number = matchobj.group(1)
-        cloze_text = matchobj.group(2)
-        optional_hint = matchobj.group(3)
-        hint = '::' + optional_hint if optional_hint else ''
-
-        return '{{c' + cloze_number + '::' + cloze_text + hint + '}}'
-
-    return re.sub(pattern, repl, string)
