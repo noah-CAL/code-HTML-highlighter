@@ -29,12 +29,12 @@ def remove_cloze(string) -> str:
             + r'<span class="p">(.*)}}(.*?)</span>')                        # matches '}}' and post-punc_before/after
 
     def repl(matchobj):
-        pre_punc = matchobj.group(1)
-        cloze_number = matchobj.group(2)
-        cloze_text = matchobj.group(3)
-        optional_hint = matchobj.group(4)
-        post_punc_before = matchobj.group(5)
-        post_punc_after = matchobj.group(6)
+        pre_punc            = matchobj.group(1)
+        cloze_number        = matchobj.group(2)
+        cloze_text          = matchobj.group(3)
+        optional_hint       = matchobj.group(4)
+        post_punc_before    = matchobj.group(5)
+        post_punc_after     = matchobj.group(6)
 
         # Wrap punctuation in <span> tags
         span_wrapper = lambda text, tag='p': f'<span class="{tag}">{text}</span>' if text else ''
