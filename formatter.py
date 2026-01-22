@@ -9,6 +9,9 @@ from pygments.lexers.html import HtmlLexer
 from pygments.lexers.shell import BashLexer
 from pygments.lexers.lisp import SchemeLexer
 from pygments.lexers.jvm import JavaLexer
+from pygments.lexers.c_cpp import CLexer
+from pygments.lexers.hdl import VerilogLexer
+from pygments.lexers.hdl import SystemVerilogLexer
 
 import re
 
@@ -62,6 +65,9 @@ def format(code: str, lang: str ) -> str:
         'html': HtmlLexer,
         'scheme': SchemeLexer,
         'java': JavaLexer,
+        'c': CLexer,
+        'verilog': VerilogLexer,
+        'systemverilog': SystemVerilogLexer,
         # etc...
     }
     if lang not in lexers:

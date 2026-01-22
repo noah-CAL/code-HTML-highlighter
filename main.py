@@ -3,7 +3,7 @@ import sys
 
 from formatter import format
 
-DEFAULT_LANG = 'java'
+DEFAULT_LANG = 'c'
 
 def copy_paste(code='', language=DEFAULT_LANG, output=False, clipboard=False) -> str:
     """
