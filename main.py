@@ -7,7 +7,8 @@ DEFAULT_LANG = 'c'
 
 def copy_paste(code='', language=DEFAULT_LANG, output=False, clipboard=False) -> str:
     """
-    Returns code in HTML format. Copies to clipboard if CLIPBOARD is true
+    Return code in HTML format. Copy to clipboard if CLIPBOARD is true.
+
     :param str code: code to format
     :param str language: parameter to specify language - default is 'java'
     :param bool output: records HTML in ../output.txt if TRUE
@@ -26,7 +27,8 @@ def copy_paste(code='', language=DEFAULT_LANG, output=False, clipboard=False) ->
 
 def main():
     """
-    CLI arguments may include a valid language name (otherwise defaults to Java). 
+    CLI arguments may include a valid language name (otherwise defaults to Java).
+
     Add -o flag to write formatted code to output.txt in current directory
     """
     language = DEFAULT_LANG
